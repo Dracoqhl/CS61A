@@ -304,30 +304,7 @@ def winner(strategy0, strategy1):
         return 1
 
 
-def average_win_rate(strategy, baseline=always_roll(6)):
-    """Return the average win rate of STRATEGY against BASELINE. Averages the
-    winrate when starting the game as player 0 and as player 1.
-    """
-    win_rate_as_player_0 = 1 - make_averaged(winner)(strategy, baseline)
-    win_rate_as_player_1 = make_averaged(winner)(baseline, strategy)
 
-    return (win_rate_as_player_0 + win_rate_as_player_1) / 2
-
-
-def run_experiments():
-    """Run a series of strategy experiments and report results."""
-    six_sided_max = max_scoring_num_rolls(six_sided)
-    print('Max scoring num rolls for six-sided dice:', six_sided_max)
-
-    print('always_roll(6) win rate:', average_win_rate(always_roll(6))) # near 0.5
-    print('catch_up win rate:', average_win_rate(catch_up))
-    print('always_roll(3) win rate:', average_win_rate(always_roll(3)))
-    print('always_roll(8) win rate:', average_win_rate(always_roll(8)))
-
-    print('boar_strategy win rate:', average_win_rate(boar_strategy))
-    print('sus_strategy win rate:', average_win_rate(sus_strategy))
-    print('final_strategy win rate:', average_win_rate(final_strategy))
-    "*** You may add additional experiments as you wish ***"
 
 
 
@@ -366,12 +343,37 @@ def final_strategy(score, opponent_score, threshold=12, num_rolls = 4):
     elif score > 90:
         return 3
     elif opponent_score - score > 40:
-        return 8
-    elif opponent_score - score > 30:
         return 7
+    elif opponent_score - score > 30:
+        return 6
     else:
-        return num_rolls  # Remove this line once implemented.
+        return num_rolls 
     # END PROBLEM 12
+
+def average_win_rate(strategy, baseline=sus_strategy):
+    """Return the average win rate of STRATEGY against BASELINE. Averages the
+    winrate when starting the game as player 0 and as player 1.
+    """
+    win_rate_as_player_0 = 1 - make_averaged(winner)(strategy, baseline)
+    win_rate_as_player_1 = make_averaged(winner)(baseline, strategy)
+
+    return (win_rate_as_player_0 + win_rate_as_player_1) / 2
+
+
+def run_experiments():
+    """Run a series of strategy experiments and report results."""
+    six_sided_max = max_scoring_num_rolls(six_sided)
+    print('Max scoring num rolls for six-sided dice:', six_sided_max)
+
+    print('always_roll(6) win rate:', average_win_rate(always_roll(6))) # near 0.5
+    print('catch_up win rate:', average_win_rate(catch_up))
+    print('always_roll(3) win rate:', average_win_rate(always_roll(3)))
+    print('always_roll(8) win rate:', average_win_rate(always_roll(8)))
+
+    print('boar_strategy win rate:', average_win_rate(boar_strategy))
+    print('sus_strategy win rate:', average_win_rate(sus_strategy))
+    print('final_strategy win rate:', average_win_rate(final_strategy))
+    "*** You may add additional experiments as you wish ***"
 
 
 ##########################

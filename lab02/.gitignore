@@ -1,0 +1,6 @@
+tests/
+.ok*
+./ok
+*.ok
+ok
+__pycache__/
